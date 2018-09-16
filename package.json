@@ -5,7 +5,8 @@
   "main": "index.js",
   "dependencies": {
     "@roryduncan/suki": "^1.0.1",
-    "rollup": "^0.65.2"
+    "rollup": "^0.65.2",
+    "rollup-plugin-node-resolve": "^3.4.0"
   },
   "devDependencies": {},
   "scripts": {
