@@ -43,7 +43,7 @@ class Bullet {
     this.color = color
     this.isOffScreen = false;
     this.width = 5
-    this.height = 10
+    this.height = this.speed
   }
   
   step() {
