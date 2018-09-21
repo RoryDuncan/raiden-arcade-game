@@ -22,14 +22,14 @@ suki.events.on(events.STEP, (time, $) => {
     if (keyboard.pressed.includes("right")) ship.move( shipMovement, 0);
     if (keyboard.pressed.includes("up"))    ship.move(0, -shipMovement);
     if (keyboard.pressed.includes("down"))  ship.move(0,  shipMovement);
-    if (keyboard.pressed.includes("space")) ship.shoot();
+    if (keyboard.pressed.includes("space")) ship.shoot(time);
     
     bulletManager.step(time)
     enemyManager.step(time, bulletManager.bullets)
 })
 
 suki.events.on(events.RENDER, (time, $) => {
-  $.clear("#266")
+  $.clear("#10141a")
   bulletManager.render($)
   enemyManager.render($)
   ship.render($)

@@ -5,16 +5,10 @@ class BulletManager {
     this.bullets = []
   }
   
-  spawnBullet(x, y, isEnemy) {
+  spawnBullet(x, y) {
     
-    if (isEnemy) {
-      let speed = 10;
-      this.bullets.push(new EnemyBullet(x, y, speed))
-    }
-    else {
-      let speed = 20;
-      this.bullets.push(new AllyBullet(x, y, -speed))
-    }
+    let speed = 60;
+    this.bullets.push(new AllyBullet(x, y, -speed))
     
   }
   
@@ -55,13 +49,6 @@ class Bullet {
   render($) {
     $.fillStyle(this.color)
     $.fillRect(this.x, this.y, this.width, this.height)
-  }
-}
-
-class EnemyBullet extends Bullet {
-  
-  constructor(x, y, speed,) {
-    super(x, y, speed, "#fc0")
   }
 }
 

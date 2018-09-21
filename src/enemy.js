@@ -6,10 +6,12 @@ export class Enemy {
   constructor() {
     this.x = 0
     this.y = 0
-    this.width = 10
-    this.height = 10
+    const factor = Math.random() * 30
+    const dimension = Math.max(4, -10 + factor)
+    this.width = dimension
+    this.height = dimension
     this.movementPath = null
-    this.color = "#69c"
+    this.color = "#777"
     this.opacity = 1
     this.isAlive = true
     this.playingDeathAnimation = false
@@ -33,13 +35,13 @@ export class Enemy {
       
       that.playingDeathAnimation = true;
       if (that.movementPath) {
-        that.color = "#fff"
+        that.color = "#ffc"
         that.movementPath.stop().remove();
         that.movementPath = null;
         that.movementPath = new Tween();
         that.movementPath
          .from(that)
-         .to({ width: that.width * 6, height: that.height * 6, opacity: 0 }, 0.4)
+         .to({ width: that.width * 6, height: that.height * 6, opacity: 0 }, 0.5)
          .on("complete", () => {
            that.isAlive = false
          })
@@ -58,14 +60,14 @@ export class Enemy {
      // travel animation
      let target = {
        x: Math.round(Math.random() * window.innerWidth),
-       y: Math.round(Math.random() * (window.innerHeight / 2))
+       y: window.innerHeight + this.height
      }
      
      this.movementPath = new Tween()
       .from(this)
       .to(target, 2 + Math.random() * 2)
       .start()
-      .on("complete", (tween) => this.movementPath = null)
+      .on("complete", (tween) => this.isAlive = false)
    }
   }
   
