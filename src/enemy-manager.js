@@ -1,36 +1,38 @@
 import { SubSystem } from "@roryduncan/suki"
 import { Enemy } from "./enemy.js"
 
+
 class EnemyManager extends SubSystem() {
   
-  constructor() {
+  constructor(maxEnemies = 50) {
     super()
     this.enemies = [];
     this.timeLastEnemyWasSpawned = 0
+    this.maxEnemies = maxEnemies
   }
   
   spawnRandomEnemy() {
     console.log("Spawning an enemy");
-    let enemy = new Enemy();
-    enemy.spawn();
-    this.enemies.push(enemy);
+    let enemy = new Enemy()
+    enemy.spawn()
+    this.enemies.push(enemy)
   }
   
   shouldSpawnEnemy(time) {
     let delta = time.now - this.timeLastEnemyWasSpawned;
-    return delta >= 1000
+    return delta >= 100
   }
   
-  step(time) {
+  step(time, bullets) {
     
     // spawn enemies
-    if (this.enemies.length < 10 && this.shouldSpawnEnemy(time)) {
+    if (this.enemies.length < this.maxEnemies && this.shouldSpawnEnemy(time)) {
       this.timeLastEnemyWasSpawned = time.now
       this.spawnRandomEnemy()
     }
     
-    this.enemies.filter( enemy => {
-      enemy.step(time);
+    this.enemies = this.enemies.filter( enemy => {
+      enemy.step(time, bullets);
       return enemy.isAlive;
     })
   }

@@ -16,7 +16,7 @@ suki.whenReady(() => {
 
 suki.events.on(events.STEP, (time, $) => {
     
-    let shipMovement = 5;
+    let shipMovement = 10;
     
     if (keyboard.pressed.includes("left"))  ship.move(-shipMovement, 0);
     if (keyboard.pressed.includes("right")) ship.move( shipMovement, 0);
@@ -24,8 +24,8 @@ suki.events.on(events.STEP, (time, $) => {
     if (keyboard.pressed.includes("down"))  ship.move(0,  shipMovement);
     if (keyboard.pressed.includes("space")) ship.shoot();
     
-    enemyManager.step(time)
     bulletManager.step(time)
+    enemyManager.step(time, bulletManager.bullets)
 })
 
 suki.events.on(events.RENDER, (time, $) => {

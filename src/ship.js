@@ -21,7 +21,7 @@ export default class Ship {
     }
     
     shoot() {
-      bulletManager.spawnBullet(this.x, this.y - 10, false)
+      bulletManager.spawnBullet(this.x + ~~(this.width / 2), this.y + 10, false)
     }
     
     render($) {
