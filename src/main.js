@@ -29,7 +29,7 @@ suki.events.on(events.STEP, (time, $) => {
 })
 
 suki.events.on(events.RENDER, (time, $) => {
-  $.clear("#10141a")
+  $.clear("#224")
   bulletManager.render($)
   enemyManager.render($)
   ship.render($)

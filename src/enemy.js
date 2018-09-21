@@ -11,7 +11,7 @@ export class Enemy {
     this.width = dimension
     this.height = dimension
     this.movementPath = null
-    this.color = "#777"
+    this.color = "#8aa"
     this.opacity = 1
     this.isAlive = true
     this.playingDeathAnimation = false
@@ -32,22 +32,26 @@ export class Enemy {
     let isCollided = bulletsList.find( bullet => intersects(bullet, this))
     
     if (isCollided) {
-      
       that.playingDeathAnimation = true;
-      if (that.movementPath) {
-        that.color = "#ffc"
-        that.movementPath.stop().remove();
-        that.movementPath = null;
-        that.movementPath = new Tween();
-        that.movementPath
-         .from(that)
-         .to({ width: that.width * 6, height: that.height * 6, opacity: 0 }, 0.5)
-         .on("complete", () => {
-           that.isAlive = false
-         })
-         .start()
-      }
+      this.die();
     }
+  }
+
+  die() {
+    
+    if (this.movementPath) {
+      this.movementPath.stop().remove();
+      this.movementPath = null;
+    }
+    this.color = "#ffc"
+    this.movementPath = new Tween();
+    this.movementPath
+     .from(this)
+     .to({ width: this.width * 6, height: this.height * 6, opacity: 0 }, 0.5)
+     .on("complete", () => {
+       this.isAlive = false
+     })
+     .start()
   }
 
   step(time, bulletsList) {
@@ -65,7 +69,7 @@ export class Enemy {
      
      this.movementPath = new Tween()
       .from(this)
-      .to(target, 2 + Math.random() * 2)
+      .to(target, 3 + Math.random() * 1, "linear")
       .start()
       .on("complete", (tween) => this.isAlive = false)
    }
