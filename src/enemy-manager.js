@@ -4,7 +4,7 @@ import { Enemy } from "./enemy.js"
 
 class EnemyManager extends SubSystem() {
   
-  constructor(maxEnemies = 50) {
+  constructor(maxEnemies = 25) {
     super()
     this.enemies = [];
     this.timeLastEnemyWasSpawned = 0

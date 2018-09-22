@@ -7,7 +7,7 @@ class BulletManager {
   
   spawnBullet(x, y) {
     
-    let speed = 60;
+    let speed = 20;
     this.bullets.push(new AllyBullet(x, y, -speed))
     
   }
@@ -35,7 +35,7 @@ class Bullet {
     this.y = y
     this.speed = speed
     this.color = color
-    this.isOffScreen = false;
+    this.isOffScreen = false
     this.width = 5
     this.height = this.speed
   }

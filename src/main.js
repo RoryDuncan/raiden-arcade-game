@@ -16,7 +16,7 @@ suki.whenReady(() => {
 
 suki.events.on(events.STEP, (time, $) => {
     
-    let shipMovement = 10;
+    let shipMovement = 14;
     
     if (keyboard.pressed.includes("left"))  ship.move(-shipMovement, 0);
     if (keyboard.pressed.includes("right")) ship.move( shipMovement, 0);

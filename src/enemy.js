@@ -6,8 +6,7 @@ export class Enemy {
   constructor() {
     this.x = 0
     this.y = 0
-    const factor = Math.random() * 30
-    const dimension = Math.max(4, -10 + factor)
+    const dimension = 14
     this.width = dimension
     this.height = dimension
     this.movementPath = null
@@ -29,7 +28,11 @@ export class Enemy {
     if (this.playingDeathAnimation || !this.isAlive) return;
     
     let that = this
-    let isCollided = bulletsList.find( bullet => intersects(bullet, this))
+    let { x, y, width, height } = this;
+    // console.log(x, y)
+    width += 20;
+    height += 20
+    let isCollided = bulletsList.find( bullet => intersects(bullet, { x, y, width, height }))
     
     if (isCollided) {
       that.playingDeathAnimation = true;
@@ -43,11 +46,11 @@ export class Enemy {
       this.movementPath.stop().remove();
       this.movementPath = null;
     }
-    this.color = "#ffc"
+    this.color = "#fc6"
     this.movementPath = new Tween();
     this.movementPath
      .from(this)
-     .to({ width: this.width * 6, height: this.height * 6, opacity: 0 }, 0.5)
+     .to({ width: this.width * 6, height: this.height * 6, opacity: 0 }, 0.25)
      .on("complete", () => {
        this.isAlive = false
      })
@@ -63,7 +66,7 @@ export class Enemy {
      
      // travel animation
      let target = {
-       x: Math.round(Math.random() * window.innerWidth),
+       x: this.x + ((~~(Math.random() * 5)) * (Math.random() >= 0.5 ? 1 : -1)),
        y: window.innerHeight + this.height
      }
      
@@ -87,6 +90,24 @@ export class Enemy {
       y: this.y - halfHeight,
     }
     $.fillRect(center.x, center.y, this.width, this.height)
+    
+    if (this.playingDeathAnimation) {
+      
+      let w = 10;
+      let count = ~~(1 + Math.random() * 3)
+      let explosions = new Array(count).fill(true).map( () => {
+        
+        let xOffset = this.x + ( (this.width / 4) * (Math.random() * 10 * (Math.random() > 0.5 ? 1 : -1)))
+        let yOffset = this.y + ( (this.width / 4) * (Math.random() * 10 * (Math.random() > 0.5 ? 1 : -1)))
+        let size = 2 + Math.random() * w;
+        return { xOffset, yOffset, size }
+      })
+      .forEach( ex => {
+        $.fillStyle("#fc0")
+        $.fillRect(ex.xOffset, ex.yOffset, ex.size, ex.size)
+      })
+      
+    }
     
     if (this.opacity !== 1) $.globalAlpha(1)
   }
