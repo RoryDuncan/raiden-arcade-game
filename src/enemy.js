@@ -29,18 +29,23 @@ export class Enemy {
     
     let that = this
     let { x, y, width, height } = this;
-    // console.log(x, y)
+    
+    // slightly boost bullet size for collisions
     width += 20;
     height += 20
+    x -= 10
+    y -= 10
+    
     let isCollided = bulletsList.find( bullet => intersects(bullet, { x, y, width, height }))
     
     if (isCollided) {
-      that.playingDeathAnimation = true;
       this.die();
     }
   }
 
   die() {
+    
+    this.playingDeathAnimation = true;
     
     if (this.movementPath) {
       this.movementPath.stop().remove();

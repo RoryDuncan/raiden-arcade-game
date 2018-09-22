@@ -3,14 +3,17 @@ import bulletManager from "./bullet-manager.js"
 export default class Ship {
 
     constructor(x = 0, y = 0, color = "#3d8") {
-      this.width = 15
+      this.width = 60
       this.height = 30
       this.x = x
       this.y = y
       this.color = color
       this.lastCreatedBullet = 0
       this.shootDelay = 60
-      this.isShootingFrame = false
+      this.isMovingRight = false
+      this.isMovingLeft = false
+      this.isMovingBack = false
+      
     }
     
     step(x, y) {
@@ -21,15 +24,38 @@ export default class Ship {
     move(x = 0, y = 0) {
       this.x += x;
       this.y += y;
+      let padding = 3;
       
-      if ( this.x < 0) this.x = 0;
-      if ( this.x + this.width > window.innerWidth) this.x = window.innerWidth - this.width
-      if (this.y > window.innerHeight) this.y = window.innerHeight
+      if (x > 0) {
+        this.isMovingRight = true
+      }
+      else {
+        this.isMovingRight = false
+      }
+      
+      if (x < 0) {
+        this.isMovingLeft = true
+      }
+      else {
+        this.isMovingLeft = false
+      }
+      
+      if (y > 0) {
+        this.isMovingBack = true
+      }
+      else {
+        this.isMovingBack = false
+      }
+      
+      if ( this.x <= 0 + this.width * padding) this.x =  this.width * padding;
+      if ( this.x + (this.width * padding) >= window.innerWidth) this.x = window.innerWidth - (padding * this.width)
+      if (this.y + (this.height * padding) >= window.innerHeight) this.y = (window.innerHeight - this.height * padding)
+      if (this.y <= 0 + (this.height * padding)) this.y = 0 + (this.height * padding)
     }
     
     shoot(time) {
       if (time.now >= this.lastCreatedBullet + this.shootDelay) {
-        bulletManager.spawnBullet(this.x + ~~(this.width / 2), this.y + 10, false)
+        bulletManager.spawnBullet(this.x - 2.5, this.y + 10, false)
         this.lastCreatedBullet = time.now
         this.isShootingFrame = true
       }
@@ -41,16 +67,21 @@ export default class Ship {
     render($) {
         
       let w = this.width;
-    
-      $.fillStyle(this.color)
-      $.fillRect(this.x, this.y, this.width, this.height)
       
-      // right wing
-      $.fillRect(this.x + w, this.y + w + 2, w, w)
-      $.fillRect(this.x + w + w - 4, this.y + w, 4, w * 4)
-      // lfet wing
-      $.fillRect(this.x - w, this.y + w + 2, w, w)
-      $.fillRect(this.x - w, this.y + w, 4, w * 4)
+      $.fillStyle(this.color)
+      
+      let leftWingOffset = this.x - (this.width / 2);
+      let rightWingOffset = this.x + (this.width / 2);
+      let triangleHeight = this.y + this.height
+      
+      
+      $.triangle(
+        { x: this.x, y: this.y, },
+        { x: leftWingOffset, y: triangleHeight, },
+        { x: rightWingOffset, y: triangleHeight, },
+      )
+        .fill()
+        .closePath();
     }
     
 }

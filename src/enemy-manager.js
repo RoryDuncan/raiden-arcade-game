@@ -12,7 +12,6 @@ class EnemyManager extends SubSystem() {
   }
   
   spawnRandomEnemy() {
-    console.log("Spawning an enemy");
     let enemy = new Enemy()
     enemy.spawn()
     this.enemies.push(enemy)
