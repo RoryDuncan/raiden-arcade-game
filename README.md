@@ -1,6 +1,6 @@
 # raiden-arcade-game
 
-A minismall 'game' showing how to use the basic features of [suki.js](https://github.com/RoryDuncan/suki.js).
+A small 'game' showing how to use the basic features of [suki.js](https://github.com/RoryDuncan/suki.js).
 
 
 ### Usage
